@@ -254,6 +254,15 @@ select.inp{background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%
 .rkgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .rkc{background:var(--card2);border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px}
 .rkc b{font-size:12.5px}.rkc span{font-size:11px;color:var(--mut);line-height:1.25}
+/* técnica */
+.tecgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tecg{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 6px 12px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.tecg .tecbody{width:58px;height:110px}
+.tecg b{font-size:14px;margin-top:6px}.tecg span{font-size:11px;color:var(--mut);font-weight:600}
+.tecbody{width:52px;height:100px;flex:none}.tecbody svg{width:100%;height:100%}
+.tecp{width:36px;height:36px;border-radius:11px;background:rgba(255,64,64,.14);color:#FF5A4F;display:grid;place-items:center;flex:none}
+.tipr{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:15px;line-height:1.4}
+.tipr .ix{width:24px;height:24px;border-radius:8px;background:var(--acc);color:var(--ink);display:grid;place-items:center;font-size:12.5px;font-weight:800;flex:none;margin-top:1px}
 /* misc */
 #toast{position:fixed;left:50%;top:calc(var(--st) + 12px);transform:translate(-50%,-160%);z-index:100;background:#F5F5F6;color:#0A0A0B;font-weight:700;font-size:14px;padding:11px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .3s cubic-bezier(.2,.9,.25,1);max-width:88vw;text-align:center}
 #toast.on{transform:translate(-50%,0)}
@@ -572,7 +581,8 @@ function render(){
     const app=$('#app');
     if(!S.ready){app.innerHTML=`<div class="load"><div><div class="logo">forja<i>.</i></div><div class="sm" style="margin-top:8px">Cargando…</div></div></div>`;$('#tabbar').innerHTML='';$('#sheets').innerHTML='';return}
     if(!S.profile){app.innerHTML=S.loadNote?`<div class="load"><div><div class="logo">forja<i>.</i></div><p class="sm">${esc(S.loadNote)}</p></div></div>`:setupView();$('#tabbar').innerHTML='';$('#sheets').innerHTML='';return}
-    app.innerHTML=(({hoy:vHoy,entreno:()=>vEntreno(),rutina:vRutina,progreso:vProg,fotos:vFotos,perfil:vPerfil})[S.tab]||vHoy)();
+    if(S.tab==='fotos'){S.tab='progreso';S.pseg='fotos'}
+    app.innerHTML=(({hoy:vHoy,entreno:()=>vEntreno(),rutina:vRutina,progreso:()=>S.pseg==='fotos'?progTop()+vFotos().replace(/^<div class="top">[\s\S]*?<\/h1><\/div><\/div>/,''):vProg(),tecnica:()=>vTecnica(),perfil:vPerfil})[S.tab]||vHoy)();
     $('#tabbar').innerHTML=tabbar();
     $('#sheets').innerHTML=S.sheets.map(sheetHTML).join('');
     S.sheets.forEach(s=>s._new=false);
@@ -594,8 +604,8 @@ function preserve(fn){
   if(foc){const el=document.querySelector(`[data-k="${foc}"]`);if(el){el.focus({preventScroll:true});try{if(sel)el.setSelectionRange(sel[0],sel[1])}catch(e){}}}
 }
 function tabbar(){
-  const t=[['hoy','Hoy'],['entreno','Entreno'],['rutina','Rutina'],['progreso','Progreso'],['fotos','Fotos']],due=photoDue().due;
-  return`<div class="in"><div class="g">${t.map(([k,l])=>`<button class="tab ${S.tab===k?'on':''}" data-act="tab" data-tab="${k}">${ICON[k]}${k==='fotos'&&due?'<i class="dot"></i>':''}<span>${l}</span></button>`).join('')}</div></div>`;
+  const t=[['hoy','Hoy'],['entreno','Entreno'],['rutina','Rutina'],['progreso','Progreso'],['tecnica','Técnica']],due=photoDue().due;
+  return`<div class="in"><div class="g">${t.map(([k,l])=>`<button class="tab ${S.tab===k?'on':''}" data-act="tab" data-tab="${k}">${ICON[k]}${k==='progreso'&&due?'<i class="dot"></i>':''}<span>${l}</span></button>`).join('')}</div></div>`;
 }
 const seg=(k,v,opts,mini)=>`<input type="hidden" data-k="${k}" value="${esc(v)}"><div class="seg ${mini?'mini':''}">${opts.map(([ov,l])=>`<button data-act="seg" data-target="${k}" data-v="${ov}" class="${String(ov)===String(v)?'on':''}">${l}</button>`).join('')}</div>`;
 const stepper=(k,v,min,max,st=1)=>`<div class="stepper"><button data-act="step" data-target="${k}" data-d="-${st}" data-min="${min}" data-max="${max}">−</button><input class="num" data-k="${k}" inputmode="numeric" value="${v}"><button data-act="step" data-target="${k}" data-d="${st}" data-min="${min}" data-max="${max}">+</button></div>`;
@@ -704,7 +714,7 @@ function vProg(){
   // peso corporal
   const bwp=(p.bw||[]).map(b=>({x:parseD(b.d).getTime(),y:b.kg}));
   const all=S.workouts.slice().reverse(),hist=all.slice(0,S.histN);
-  return`<div class="top"><div><div class="eyebrow">Tu evolución</div><h1>Progreso</h1></div></div>
+  return`${progTop()}
   <div class="card"><div class="ch"><span class="ct">Constancia</span><span class="sm mut">18 semanas</span></div>
    <div class="hm-m" style="grid-template-columns:repeat(${W},1fr)">${months}</div>
    <div class="hm" style="grid-template-columns:repeat(${W},1fr)">${cells}</div>
@@ -730,6 +740,7 @@ function rankCard(ids){
   if(!L.length)return'';
   return`<div class="card"><div class="ch"><span class="ct">Tus rangos</span><span class="sm mut">${L.length} ejercicio${L.length===1?'':'s'}</span></div><div class="rkgrid">${L.map(({ex,rk})=>`<button class="rkc" data-act="pr-ex" data-id="${ex.id}">${rankBadge(rk,40)}<b style="color:${rk.col}">${rankLabel(rk)}</b><span>${esc(ex.n)}</span></button>`).join('')}</div></div>`;
 }
+function progTop(){const due=photoDue().due;return`<div class="top"><div><div class="eyebrow">Tu evolución</div><h1>Progreso</h1></div></div><div class="seg" style="margin:-4px 0 16px"><button class="${S.pseg!=='fotos'?'on':''}" data-act="pseg" data-v="stats">Estadísticas</button><button class="${S.pseg==='fotos'?'on':''}" data-act="pseg" data-v="fotos">Fotos${due?' <span style="color:var(--c3)">●</span>':''}</button></div>`}
 const photoSrc=p=>p.src||'';
 function vFotos(){
   const p=S.profile,ev=p.photoEvery||14,ph=S.photos,st=photoDue();
@@ -957,6 +968,7 @@ const A={
   'wd-del'(el){const id=el.dataset.id;confirmSheet('¿Borrar entreno?','No se puede deshacer.','Borrar',true,()=>{Store.del(id);derive();S.sheets=[];render();toast('Entreno borrado')})},
   'cf-ok'(){const s=S.sheets[S.sheets.length-1];S.sheets.pop();if(s&&s.fn)s.fn();else render()},
   'pr-ex'(el){S.prEx=el.dataset.id;render()},
+  pseg(el){S.pseg=el.dataset.v;render();window.scrollTo(0,0)},
   'hist-more'(){S.histN+=15;render()},
   'bw-open'(){openSheet({type:'bw'})},
   'bw-save'(){const kg=pnum(val('bw.kg'));if(!kg||kg<30||kg>250)return toast('Pon un peso válido');
@@ -1027,6 +1039,7 @@ async function addPhoto(file){
 </script>
 <script src="hunt.js"></script>
 <script src="train.js"></script>
+<script src="tech.js"></script>
 <script>
 render();
 Store.init();

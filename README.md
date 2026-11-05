@@ -1,6 +1,6 @@
 # Forja
 
-App de gym para iPhone (PWA): rutina semanal, registro de series, rangos sugeridos, marcas, mapa muscular, fotos de progreso, aviso diario y Cazamonstruos (reto de flexiones con la cámara).
+App de gym para iPhone (PWA): rutina semanal, registro de series, rangos sugeridos, marcas, mapa muscular, fotos de progreso, aviso diario y Cazamonstruos (reto de flexiones con la cámara) y Técnica (78 ejercicios con claves y vídeos cortos).
 
 - App: https://darkmdg91-cloud.github.io/Forja-app-gym/
 - Instalar: abrir en Safari → Compartir → Añadir a pantalla de inicio.

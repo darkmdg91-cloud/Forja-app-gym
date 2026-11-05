@@ -83,7 +83,7 @@ function vEntrenoActive() {
   return `<div class="enhead"><div class="sp"><div class="eyebrow">Ejercicio ${cur + 1} de ${list.length} · <span class="num" data-elapsed>0:00</span></div></div><span class="pill">${tot} serie${tot === 1 ? '' : 's'}</span><button class="iconbtn" data-act="en-menu" aria-label="Opciones">${ICON.dots}</button></div>
   <div class="chips enchips">${list.map((x, i) => `<button class="chip ${i === cur ? 'on' : ''}" data-act="en-go" data-i="${i}">${(x.sets || []).length ? '✓ ' : ''}${esc(exById(x.id).n)}</button>`).join('')}</div>
   <div class="encard">
-   <div class="exn" style="font-size:26px;line-height:1.1">${esc(ex.n)}</div><div class="xs mut b" style="margin-top:3px">${ex.m.map(m => MUSCLES[m]).join(' · ')}${ex.k === 'db' ? ' · kg por mancuerna' : ''}</div>
+   <div class="row" style="align-items:flex-start"><div class="sp" style="min-width:0"><div class="exn" style="font-size:26px;line-height:1.1">${esc(ex.n)}</div><div class="xs mut b" style="margin-top:3px">${ex.m.map(m => MUSCLES[m]).join(' · ')}${ex.k === 'db' ? ' · kg por mancuerna' : ''}</div></div><button class="btn s sec" style="flex:none" data-act="tec-open" data-id="${ex.id}">▶ Técnica</button></div>
    ${rankBlock(ex, rk, ls ? ls.reps : sg.reps && sg.reps[0])}
    <div class="ensug">${esc(sugTxt)}</div>
    <div class="enset">Serie ${sets.length + 1}</div>

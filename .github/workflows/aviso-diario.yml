@@ -1,0 +1,36 @@
+name: Aviso diario
+
+on:
+  schedule:
+    - cron: '30 6 * * *'   # 8:30 en Madrid en horario de verano
+    - cron: '30 7 * * *'   # 8:30 en Madrid en horario de invierno
+  workflow_dispatch:       # botón "Run workflow" para probar
+
+permissions:
+  contents: write
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save --no-package-lock web-push@3
+      - run: node scripts/push.mjs
+        env:
+          VAPID_PRIVATE: ${{ secrets.VAPID_PRIVATE }}
+          FORJA_SUB: ${{ secrets.FORJA_SUB }}
+          EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+      # GitHub pausa las tareas programadas tras 60 días sin actividad: un commit vacío al mes lo evita.
+      - name: Mantener activo
+        if: github.event_name == 'schedule' && github.event.schedule == '30 7 * * *'
+        run: |
+          if [ "$(date -u +%d)" = "01" ]; then
+            git config user.name "forja-bot"
+            git config user.email "forja-bot@users.noreply.github.com"
+            git commit --allow-empty -m "Mantener activo el aviso diario"
+            git push
+          fi

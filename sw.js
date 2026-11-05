@@ -1,7 +1,9 @@
 /* Service worker de Forja: funciona sin conexión y muestra el aviso diario */
 importScripts('phrases.js');
-const CACHE = 'forja-v2';
-const ASSETS = ['./', 'index.html', 'phrases.js', 'manifest.webmanifest', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+const CACHE = 'forja-v3';
+const CDN_CACHE = 'forja-cdn';
+const CDN_HOSTS = ['cdn.jsdelivr.net', 'storage.googleapis.com'];
+const ASSETS = ['./', 'index.html', 'phrases.js', 'music.js', 'hunt.js', 'manifest.webmanifest', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -9,14 +11,24 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys()
-      .then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then((ks) => Promise.all(ks.filter((k) => k !== CACHE && k !== CDN_CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
 // Red primero (para recibir actualizaciones); si no hay conexión, caché.
 self.addEventListener('fetch', (e) => {
   const r = e.request;
-  if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
+  if (r.method !== 'GET') return;
+  const u = new URL(r.url);
+  // detector de flexiones (librería y modelo): caché primero, para que funcione sin conexión
+  if (CDN_HOSTS.includes(u.host)) {
+    e.respondWith(caches.open(CDN_CACHE).then(async (c) => {
+      const m = await c.match(r); if (m) return m;
+      const res = await fetch(r); if (res.ok) c.put(r, res.clone()); return res;
+    }));
+    return;
+  }
+  if (u.origin !== location.origin) return;
   e.respondWith(
     fetch(r)
       .then((res) => {

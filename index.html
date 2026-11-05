@@ -190,6 +190,62 @@ select.inp{background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%
 .tpl{display:block;width:100%;text-align:left;padding:14px;border-radius:16px;background:var(--card2);border:1px solid var(--line);margin-bottom:8px}
 .steps{margin:10px 0 0;padding-left:20px;font-size:13.5px;line-height:1.55;color:var(--mut)}
 .steps b{color:var(--tx)}
+/* música */
+.mb,.mb-empty{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:8px;width:100%}
+.mb-empty{padding:12px 14px;gap:10px;color:var(--mut);font-size:13.5px;font-weight:600}
+.mb-empty svg{color:#1ED760;flex:none}
+.mb-i{display:flex;align-items:center;gap:10px;flex:1;min-width:0;text-align:left}
+.mb-i img,.mb-i>svg{width:40px;height:40px;border-radius:9px;flex:none;object-fit:cover}
+.mb-i>svg{padding:10px;background:var(--card2);color:#1ED760}
+.mb-t{min-width:0;display:flex;flex-direction:column}.mb-t b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mb-t span{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mb-c{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:var(--tx);flex:none}
+.mb-p{background:var(--tx);color:var(--bg);border-radius:40px}
+.mus-now{display:flex;align-items:center;gap:14px}
+.mus-art{width:72px;height:72px;border-radius:14px;background:var(--card2);display:grid;place-items:center;color:#1ED760;flex:none;overflow:hidden}.mus-art img{width:100%;height:100%;object-fit:cover}
+.mus-ctl{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:16px}
+.mus-ctl button{width:46px;height:46px;border-radius:40px;display:grid;place-items:center;background:var(--card2)}
+.mus-ctl .pp{width:60px;height:60px;background:var(--tx);color:var(--bg)}
+.mus-th{width:44px;height:44px;border-radius:9px;background:var(--card2);display:grid;place-items:center;color:#1ED760;flex:none;overflow:hidden}.mus-th img{width:100%;height:100%;object-fit:cover}
+code.uri{display:block;font-size:12px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:6px;color:var(--tx);word-break:break-all;-webkit-user-select:all;user-select:all}
+/* cazamonstruos */
+.hcard{display:flex;gap:14px;align-items:center;background:linear-gradient(150deg,#1a1426,var(--card) 70%)}
+.hc-m{width:92px;height:92px;flex:none}.hc-m svg{width:100%;height:100%}
+#hunt{position:fixed;inset:0;z-index:80;background:var(--bg);display:none;flex-direction:column}
+#hunt.on{display:flex}
+.hh{display:flex;align-items:center;gap:12px;padding:calc(var(--st) + 10px) 16px 8px;max-width:540px;width:100%;margin:0 auto}
+.hreps{text-align:right}.hreps b{display:block;font-size:30px;font-weight:900;line-height:1;color:var(--acc)}.hreps span{font-size:11px;color:var(--mut);font-weight:700}
+.hscroll{flex:1;overflow:auto;padding:6px 16px 20px;max-width:540px;width:100%;margin:0 auto;-webkit-overflow-scrolling:touch}
+.hfoot{padding:10px 16px calc(var(--sb) + 12px);max-width:540px;width:100%;margin:0 auto;gap:10px}
+.beast{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:6px 0 12px}
+.bst{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 4px 8px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.bst svg{width:100%;height:auto;aspect-ratio:1}.bst b{font-size:11.5px;margin-top:2px}.bst span{font-size:10.5px;color:var(--mut);font-weight:700}
+.bst.on{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.bst.lock svg{filter:brightness(0) opacity(.35)}
+.hpbar{position:relative;height:22px;border-radius:12px;background:var(--card2);margin:4px 16px 0;overflow:hidden;max-width:508px;align-self:stretch}
+@media(min-width:540px){.hpbar{margin:4px auto 0;width:508px}}
+.hpbar i{position:absolute;left:0;top:0;bottom:0;border-radius:12px;transition:width .25s,background .3s}
+.hpbar span{position:relative;display:block;text-align:center;font-size:12.5px;font-weight:800;line-height:22px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.arena{flex:1;position:relative;display:grid;place-items:center;min-height:0;overflow:hidden}
+.arena.tapzone{background:radial-gradient(circle at 50% 60%,rgba(212,255,58,.07),transparent 60%)}
+.mon{width:min(78vw,340px);aspect-ratio:1}.mon svg{width:100%;height:100%}
+.bob{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.spawn{animation:spawn .45s cubic-bezier(.2,1.4,.4,1),bob 2.4s ease-in-out .45s infinite}
+@keyframes spawn{from{transform:scale(.2);opacity:0}}
+.hit{animation:hit .28s}
+@keyframes hit{0%{transform:translateX(0);filter:brightness(2.4)}25%{transform:translateX(-10px) rotate(-3deg)}50%{transform:translateX(9px) rotate(3deg)}100%{transform:none;filter:none}}
+.dead{animation:dead .8s forwards}
+@keyframes dead{20%{transform:scale(1.1);filter:brightness(3)}100%{transform:scale(.1) rotate(25deg);opacity:0}}
+#hFx{position:absolute;inset:0;pointer-events:none}
+.dmg{position:absolute;top:38%;font-size:34px;font-weight:900;color:#fff;text-shadow:0 2px 0 var(--red),0 4px 12px rgba(0,0,0,.6);animation:dmg .8s ease-out forwards}
+@keyframes dmg{to{transform:translateY(-70px);opacity:0}}
+.kills{position:absolute;left:12px;bottom:8px;display:flex;gap:2px}.kills svg{width:30px;height:30px}
+.hbottom{display:flex;gap:12px;align-items:center;padding:8px 16px 0;max-width:540px;width:100%;margin:0 auto}
+.camw{position:relative;width:96px;height:128px;border-radius:16px;overflow:hidden;background:#000;flex:none;border:1px solid var(--line)}
+.camw video,.camw canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.camw video{transform:scaleX(-1)}
+.hstat{font-size:13.5px;font-weight:700;color:var(--mut);min-height:36px}
+.kgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}.kgrid svg{width:100%;height:auto}
 /* misc */
 #toast{position:fixed;left:50%;top:calc(var(--st) + 12px);transform:translate(-50%,-160%);z-index:100;background:#F5F5F6;color:#0A0A0B;font-weight:700;font-size:14px;padding:11px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .3s cubic-bezier(.2,.9,.25,1);max-width:88vw;text-align:center}
 #toast.on{transform:translate(-50%,0)}
@@ -336,8 +392,9 @@ function sig(items){return JSON.stringify(Object.keys(items).sort().map(k=>[k,it
 function onData(){derive();render()}
 function derive(){
   const it=Store.items;S.profile=it.profile||null;S.draft=it.draft||null;
-  const ws=[],ps=[];
-  for(const[id,v]of Object.entries(it)){if(!v)continue;if(v.t==='w')ws.push(Object.assign({},v,{id}));else if(v.t==='p')ps.push(Object.assign({},v,{id}))}
+  const ws=[],ps=[],hs=[];
+  for(const[id,v]of Object.entries(it)){if(!v)continue;if(v.t==='w')ws.push(Object.assign({},v,{id}));else if(v.t==='p')ps.push(Object.assign({},v,{id}));else if(v.t==='h')hs.push(Object.assign({},v,{id}))}
+  S.hunts=hs;
   const by=(a,b)=>a.d<b.d?-1:a.d>b.d?1:(a.ts||0)-(b.ts||0);
   S.workouts=ws.sort(by);S.photos=ps.sort(by);
 }
@@ -555,9 +612,11 @@ function vHoy(){
   else if(!has)today=`<div class="today"><div class="eyebrow">Empieza por aquí</div><div class="nm">Monta tu rutina</div><p class="sm mut" style="margin:-4px 0 16px">Dime qué entrenas cada día y te lo tendré listo, con aviso en el móvil.</p><button class="btn" data-act="tab" data-tab="rutina">Crear rutina</button><button class="btn ghost" data-act="wk-start">Entreno libre</button></div>`;
   else if(td.ex.length)today=`<div class="today"><div class="eyebrow">${doneToday?'Hecho hoy ✓':'Hoy toca'}</div><div class="nm">${esc(dayName(td))}</div><div class="tchips">${td.ex.map(id=>`<span class="tchip">${esc(exById(id).n)}</span>`).join('')}</div><button class="btn ${doneToday?'sec':''}" data-act="wk-routine">${doneToday?'Entrenar otra vez':'Empezar rutina'}</button><button class="btn ghost" data-act="wk-start">Entreno libre</button></div>`;
   else today=`<div class="today" style="background:var(--card);border-color:var(--line)"><div class="eyebrow">Hoy toca</div><div class="nm">Descanso</div><p class="sm mut" style="margin:-4px 0 16px">El músculo crece cuando paras. Come bien y duerme.</p><button class="btn sec" data-act="wk-start">Entrenar igualmente</button></div>`;
-  return`<div class="top"><div><div class="eyebrow">${DIA[(now.getDay()+6)%7]}, ${now.getDate()} ${MES[now.getMonth()]}</div><h1>${p.name?'Hola, '+esc(p.name):'Hoy'}</h1></div>${streak?`<span class="pill acc">${ICON.flame} ${streak} sem</span>`:''}</div>
+  return`<div class="top"><div><div class="eyebrow">${DIA[(now.getDay()+6)%7]}, ${now.getDate()} ${MES[now.getMonth()]}</div><h1>${p.name?'Hola, '+esc(p.name):'Hoy'}</h1></div><div class="row" style="gap:8px">${streak?`<span class="pill acc">${ICON.flame} ${streak} sem</span>`:''}<button class="iconbtn" data-act="mus-open" aria-label="Música">${MI.note}</button></div></div>
   <p class="phrase">${esc(phraseNow(has&&!td.ex.length))}</p>
+  ${spOn()?`<div class="mbar" style="margin-bottom:14px">${mbarHTML()}</div>`:''}
   ${today}
+  ${huntCard()}
   ${ph.due?`<div class="banner"><div class="ic">${ICON.cam}</div><div class="sp"><div class="b">${ph.first?'Haz tu primera foto':'Toca foto de progreso'}</div><div class="sm mut">${ph.first?'Será tu punto de partida.':`Han pasado ${ph.since} días desde la última.`}</div></div><label class="btn s sec upl">Hacer<input type="file" accept="image/*" data-change="photo"></label></div>`:''}
   <div class="card"><div class="ch"><span class="ct">Esta semana</span></div>
    <div class="rings">${ringsSVG([w0.days/goal,w0.sets/sg,vp])}
@@ -701,9 +760,10 @@ function vPerfil(){
 /* ============ hojas ============ */
 function sheetHTML(s,i){
   const full=s.type==='wk';
-  const body=({wk:shWorkout,pk:shPicker,wd:shDetail,cf:shConfirm,bw:shBW,ph:shPhoto,cu:shCustom,bk:shBackup,done:shDone,rd:shRDay,tpl:shTpl})[s.type](s);
+  const f=SHEETS[s.type];const body=f?f(s):'';
   return`<div class="sw ${s._new?'enter':''}" style="z-index:${40+i*2}">${full?'':'<div class="scrim" data-act="close"></div>'}<div class="sheet ${full?'full':''}" data-scroll="sh-${s.type}">${full?'':'<div class="grab"></div>'}${body}</div></div>`;
 }
+const SHEETS={wk:s=>shWorkout(s),pk:s=>shPicker(s),wd:s=>shDetail(s),cf:s=>shConfirm(s),bw:s=>shBW(s),ph:s=>shPhoto(s),cu:s=>shCustom(s),bk:s=>shBackup(s),done:s=>shDone(s),rd:s=>shRDay(s),tpl:s=>shTpl(s)};
 function openSheet(o){o._new=true;S.sheets.push(o);render()}
 function closeTop(){S.sheets.pop();render()}
 function confirmSheet(title,text,ok,danger,fn){openSheet({type:'cf',title,text,ok,danger,fn})}
@@ -713,6 +773,7 @@ function shWorkout(){
   const d=S.draft;if(!d)return'';
   const ex=d.ex||[],tot=ex.reduce((a,e)=>a+(e.sets||[]).length,0);
   return`<div class="wkh"><button class="iconbtn" data-act="wk-min" aria-label="Minimizar">${ICON.down}</button><div class="tt"><div class="eyebrow">${d.editId?'Editando entreno':'Entreno en curso'}</div><div class="el num" ${d.editId?'':'data-elapsed'}>${d.editId?fdate(d.d):'0:00'}</div></div><span class="pill">${tot} serie${tot===1?'':'s'}</span></div>
+  <div class="mbar" style="margin-bottom:14px">${mbarHTML()}</div>
   <div class="two" style="margin-bottom:14px"><input class="inp" data-k="wk.name" data-change="wk-name" placeholder="Nombre (opcional)" value="${esc(d.name||'')}"><input class="inp" type="date" data-k="wk.date" data-change="wk-date" value="${d.d}" max="${dkey()}"></div>
   ${ex.map(exCard).join('')}
   ${ex.length?'':`<div class="empty" style="padding:40px 10px"><b>Añade tu primer ejercicio</b>Busca por nombre o por músculo.</div>`}
@@ -904,7 +965,7 @@ const A={
   async 'bk-copy'(){const t=$('#bktxt').value;try{await navigator.clipboard.writeText(t);toast('Copiado')}catch(e){const el=$('#bktxt');el.removeAttribute('readonly');el.select();try{document.execCommand('copy');toast('Copiado')}catch(e2){toast('Mantén pulsado el texto para copiarlo')}el.setAttribute('readonly','')}},
   'bk-import'(){let j;try{j=JSON.parse(val('bk.in'))}catch(e){return toast('Ese texto no es una copia válida')}
     if(!j||j.app!=='forja'||!j.items)return toast('Ese texto no es una copia de Forja');
-    const ents=Object.entries(j.items).filter(([k,v])=>v&&['w','p','profile'].includes(v.t)&&(v.t!=='p'||v.asset||v.src));
+    const ents=Object.entries(j.items).filter(([k,v])=>v&&['w','p','h','profile'].includes(v.t)&&(v.t!=='p'||v.asset||v.src));
     confirmSheet('¿Restaurar copia?',`Se cargarán ${ents.length} registros. Los que tengan el mismo identificador se sobrescriben.`,'Restaurar',false,async()=>{
       S.sheets=[];render();toast('Restaurando…');for(const[k,v]of ents){await Store.put(k,v);await sleep(Store.mode==='cloud'?80:0)}derive();render();toast('Copia restaurada')})},
 };
@@ -946,8 +1007,12 @@ async function addPhoto(file){
 }
 
 /* ============ arranque ============ */
+</script>
+<script src="music.js"></script>
+<script src="hunt.js"></script>
+<script>
 render();
-Store.init();
+Store.init().then(()=>{spCallback();spPoll(true)});
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>

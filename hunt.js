@@ -89,7 +89,7 @@ function huntPlayHTML() {
   <div class="arena ${H.mode === 'tap' ? 'tapzone' : ''}" id="hArena"><div id="hMon" class="mon"></div><div id="hFx"></div><div class="kills" id="hKills"></div></div>
   <div class="hbottom">
     ${H.mode === 'cam' ? `<div class="camw"><video id="hVid" playsinline muted autoplay></video><canvas id="hCan"></canvas></div>` : ''}
-    <div class="sp" style="min-width:0"><div class="hstat" id="hStat">${H.mode === 'cam' ? 'Preparando cámara…' : 'Toca la pantalla con la nariz al bajar'}</div><div class="mbar" style="margin-top:8px">${mbarHTML()}</div></div>
+    <div class="sp" style="min-width:0"><div class="hstat" id="hStat">${H.mode === 'cam' ? 'Preparando cámara…' : 'Toca la pantalla con la nariz al bajar'}</div></div>
   </div>
   <div class="hfoot row"><button class="btn sec" style="flex:1" data-act="hunt-plus">+1 flexión</button><button class="btn" style="flex:1" data-act="hunt-end">Terminar</button></div>`;
 }
@@ -192,11 +192,11 @@ function camLoop() {
 }
 async function huntStart() {
   try { localStorage.setItem('forja.hunt', JSON.stringify({ mode: H.mode, sound: H.sound })); } catch (e) {}
-  try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch (e) {} // no cortar la música de Spotify
+  try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch (e) {} // no cortar la música que tengas puesta
   if (H.sound) { try { H.ac = H.ac || new (window.AudioContext || window.webkitAudioContext)(); H.ac.resume(); } catch (e) {} }
   try { if (navigator.wakeLock) H.wl = await navigator.wakeLock.request('screen'); } catch (e) {}
   Object.assign(H, { view: 'play', reps: 0, kills: [], lap: 0, start: Date.now(), busy: false });
-  H.det.reset(); huntPaint(); spawn(); spPoll(true);
+  H.det.reset(); huntPaint(); spawn();
   if (H.mode === 'cam') {
     const st = document.getElementById('hStat');
     try {

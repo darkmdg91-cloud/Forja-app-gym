@@ -1,9 +1,9 @@
 /* Service worker de Forja: funciona sin conexión y muestra el aviso diario */
 importScripts('phrases.js');
-const CACHE = 'forja-v4';
+const CACHE = 'forja-v5';
 const CDN_CACHE = 'forja-cdn';
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'storage.googleapis.com'];
-const ASSETS = ['./', 'index.html', 'phrases.js', 'music.js', 'hunt.js', 'train.js', 'manifest.webmanifest', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+const ASSETS = ['./', 'index.html', 'phrases.js', 'hunt.js', 'train.js', 'manifest.webmanifest', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));

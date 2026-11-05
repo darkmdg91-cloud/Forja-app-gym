@@ -82,7 +82,6 @@ function vEntrenoActive() {
   const sugTxt = sg.src === 'none' ? `Objetivo: ${sg.reps[0]}–${sg.reps[1]} reps` : (bw ? `${sg.reps[0]}–${sg.reps[1]} reps` : `${kgR(sg.kg)} kg · ${sg.reps[0]}–${sg.reps[1]} reps`) + (sg.tip ? ' · ' + sg.tip : '');
   return `<div class="enhead"><div class="sp"><div class="eyebrow">Ejercicio ${cur + 1} de ${list.length} · <span class="num" data-elapsed>0:00</span></div></div><span class="pill">${tot} serie${tot === 1 ? '' : 's'}</span><button class="iconbtn" data-act="en-menu" aria-label="Opciones">${ICON.dots}</button></div>
   <div class="chips enchips">${list.map((x, i) => `<button class="chip ${i === cur ? 'on' : ''}" data-act="en-go" data-i="${i}">${(x.sets || []).length ? '✓ ' : ''}${esc(exById(x.id).n)}</button>`).join('')}</div>
-  <div class="mbar" style="margin-bottom:12px">${mbarHTML()}</div>
   <div class="encard">
    <div class="exn" style="font-size:26px;line-height:1.1">${esc(ex.n)}</div><div class="xs mut b" style="margin-top:3px">${ex.m.map(m => MUSCLES[m]).join(' · ')}${ex.k === 'db' ? ' · kg por mancuerna' : ''}</div>
    ${rankBlock(ex, rk, ls ? ls.reps : sg.reps && sg.reps[0])}

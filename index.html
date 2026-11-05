@@ -190,23 +190,6 @@ select.inp{background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%
 .tpl{display:block;width:100%;text-align:left;padding:14px;border-radius:16px;background:var(--card2);border:1px solid var(--line);margin-bottom:8px}
 .steps{margin:10px 0 0;padding-left:20px;font-size:13.5px;line-height:1.55;color:var(--mut)}
 .steps b{color:var(--tx)}
-/* música */
-.mb,.mb-empty{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:8px;width:100%}
-.mb-empty{padding:12px 14px;gap:10px;color:var(--mut);font-size:13.5px;font-weight:600}
-.mb-empty svg{color:#1ED760;flex:none}
-.mb-i{display:flex;align-items:center;gap:10px;flex:1;min-width:0;text-align:left}
-.mb-i img,.mb-i>svg{width:40px;height:40px;border-radius:9px;flex:none;object-fit:cover}
-.mb-i>svg{padding:10px;background:var(--card2);color:#1ED760}
-.mb-t{min-width:0;display:flex;flex-direction:column}.mb-t b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mb-t span{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mb-c{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:var(--tx);flex:none}
-.mb-p{background:var(--tx);color:var(--bg);border-radius:40px}
-.mus-now{display:flex;align-items:center;gap:14px}
-.mus-art{width:72px;height:72px;border-radius:14px;background:var(--card2);display:grid;place-items:center;color:#1ED760;flex:none;overflow:hidden}.mus-art img{width:100%;height:100%;object-fit:cover}
-.mus-ctl{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:16px}
-.mus-ctl button{width:46px;height:46px;border-radius:40px;display:grid;place-items:center;background:var(--card2)}
-.mus-ctl .pp{width:60px;height:60px;background:var(--tx);color:var(--bg)}
-.mus-th{width:44px;height:44px;border-radius:9px;background:var(--card2);display:grid;place-items:center;color:#1ED760;flex:none;overflow:hidden}.mus-th img{width:100%;height:100%;object-fit:cover}
-code.uri{display:block;font-size:12px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:6px;color:var(--tx);word-break:break-all;-webkit-user-select:all;user-select:all}
 /* cazamonstruos */
 .hcard{display:flex;gap:14px;align-items:center;background:linear-gradient(150deg,#1a1426,var(--card) 70%)}
 .hc-m{width:92px;height:92px;flex:none}.hc-m svg{width:100%;height:100%}
@@ -641,9 +624,8 @@ function vHoy(){
   else if(!has)today=`<div class="today"><div class="eyebrow">Empieza por aquí</div><div class="nm">Monta tu rutina</div><p class="sm mut" style="margin:-4px 0 16px">Dime qué entrenas cada día y te lo tendré listo, con aviso en el móvil.</p><button class="btn" data-act="tab" data-tab="rutina">Crear rutina</button><button class="btn ghost" data-act="wk-start">Entreno libre</button></div>`;
   else if(td.ex.length)today=`<div class="today"><div class="eyebrow">${doneToday?'Hecho hoy ✓':'Hoy toca'}</div><div class="nm">${esc(dayName(td))}</div><div class="tchips">${td.ex.map(id=>`<span class="tchip">${esc(exById(id).n)}</span>`).join('')}</div><button class="btn ${doneToday?'sec':''}" data-act="en-start" data-day="${todayIdx()}">${doneToday?'Entrenar otra vez':'Empezar rutina'}</button><button class="btn ghost" data-act="wk-start">Entreno libre</button></div>`;
   else today=`<div class="today" style="background:var(--card);border-color:var(--line)"><div class="eyebrow">Hoy toca</div><div class="nm">Descanso</div><p class="sm mut" style="margin:-4px 0 16px">El músculo crece cuando paras. Come bien y duerme.</p><button class="btn sec" data-act="wk-start">Entrenar igualmente</button></div>`;
-  return`<div class="top"><div><div class="eyebrow">${DIA[(now.getDay()+6)%7]}, ${now.getDate()} ${MES[now.getMonth()]}</div><h1>${p.name?'Hola, '+esc(p.name):'Hoy'}</h1></div><div class="row" style="gap:8px">${streak?`<span class="pill acc">${ICON.flame} ${streak} sem</span>`:''}<button class="iconbtn" data-act="mus-open" aria-label="Música">${MI.note}</button><button class="iconbtn" data-act="tab" data-tab="perfil" aria-label="Perfil">${ICON.gear}</button></div></div>
+  return`<div class="top"><div><div class="eyebrow">${DIA[(now.getDay()+6)%7]}, ${now.getDate()} ${MES[now.getMonth()]}</div><h1>${p.name?'Hola, '+esc(p.name):'Hoy'}</h1></div><div class="row" style="gap:8px">${streak?`<span class="pill acc">${ICON.flame} ${streak} sem</span>`:''}<button class="iconbtn" data-act="tab" data-tab="perfil" aria-label="Perfil">${ICON.gear}</button></div></div>
   <p class="phrase">${esc(phraseNow(has&&!td.ex.length))}</p>
-  ${spOn()?`<div class="mbar" style="margin-bottom:14px">${mbarHTML()}</div>`:''}
   ${today}
   ${huntCard()}
   ${ph.due?`<div class="banner"><div class="ic">${ICON.cam}</div><div class="sp"><div class="b">${ph.first?'Haz tu primera foto':'Toca foto de progreso'}</div><div class="sm mut">${ph.first?'Será tu punto de partida.':`Han pasado ${ph.since} días desde la última.`}</div></div><label class="btn s sec upl">Hacer<input type="file" accept="image/*" data-change="photo"></label></div>`:''}
@@ -809,7 +791,6 @@ function shWorkout(){
   const d=S.draft;if(!d)return'';
   const ex=d.ex||[],tot=ex.reduce((a,e)=>a+(e.sets||[]).length,0);
   return`<div class="wkh"><button class="iconbtn" data-act="wk-min" aria-label="Minimizar">${ICON.down}</button><div class="tt"><div class="eyebrow">${d.editId?'Editando entreno':'Entreno en curso'}</div><div class="el num" ${d.editId?'':'data-elapsed'}>${d.editId?fdate(d.d):'0:00'}</div></div><span class="pill">${tot} serie${tot===1?'':'s'}</span></div>
-  <div class="mbar" style="margin-bottom:14px">${mbarHTML()}</div>
   <div class="two" style="margin-bottom:14px"><input class="inp" data-k="wk.name" data-change="wk-name" placeholder="Nombre (opcional)" value="${esc(d.name||'')}"><input class="inp" type="date" data-k="wk.date" data-change="wk-date" value="${d.d}" max="${dkey()}"></div>
   ${ex.map(exCard).join('')}
   ${ex.length?'':`<div class="empty" style="padding:40px 10px"><b>Añade tu primer ejercicio</b>Busca por nombre o por músculo.</div>`}
@@ -1044,12 +1025,11 @@ async function addPhoto(file){
 
 /* ============ arranque ============ */
 </script>
-<script src="music.js"></script>
 <script src="hunt.js"></script>
 <script src="train.js"></script>
 <script>
 render();
-Store.init().then(()=>{spCallback();spPoll(true)});
+Store.init();
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
